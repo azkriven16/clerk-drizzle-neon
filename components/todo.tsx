@@ -61,11 +61,11 @@ const Todo: FC<Props> = ({
 
   // Rendering the Todo component
   return (
-    <div className="flex items-center gap-2 p-4 border-gray-200 border-solid border rounded-lg">
+    <div className="flex items-center gap-2 p-4 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
       {/* Checkbox for marking the todo as done */}
       <input
         type="checkbox"
-        className="text-blue-200 rounded-sm h-4 w-4"
+        className="text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-sm h-4 w-4 focus:ring-blue-500 dark:focus:ring-blue-400"
         checked={isDone}
         onChange={handleIsDone}
       />
@@ -76,22 +76,24 @@ const Todo: FC<Props> = ({
         onChange={handleTextChange}
         readOnly={!editing}
         className={`${
-          todo.done ? "line-through" : ""
-        } outline-none read-only:border-transparent focus:border border-gray-200 rounded px-2 py-1 w-full`}
+          todo.done
+            ? "line-through text-gray-500 dark:text-gray-400"
+            : "text-gray-900 dark:text-gray-100"
+        } outline-none bg-transparent read-only:border-transparent focus:border border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded px-2 py-1 w-full placeholder-gray-400 dark:placeholder-gray-500`}
       />
       {/* Action buttons for editing, saving, canceling, and deleting */}
       <div className="flex gap-1 ml-auto">
         {editing ? (
           <button
             onClick={handleSave}
-            className="bg-green-600 text-green-50 rounded px-2 w-14 py-1"
+            className="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white rounded px-2 w-14 py-1 transition-colors"
           >
             Save
           </button>
         ) : (
           <button
             onClick={handleEdit}
-            className="bg-blue-400 text-blue-50 rounded w-14 px-2 py-1"
+            className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded w-14 px-2 py-1 transition-colors"
           >
             Edit
           </button>
@@ -99,14 +101,14 @@ const Todo: FC<Props> = ({
         {editing ? (
           <button
             onClick={handleCancel}
-            className="bg-red-400 w-16 text-red-50 rounded px-2 py-1"
+            className="bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 w-16 text-white rounded px-2 py-1 transition-colors"
           >
             Close
           </button>
         ) : (
           <button
             onClick={handleDelete}
-            className="bg-red-400 w-16 text-red-50 rounded px-2 py-1"
+            className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 w-16 text-white rounded px-2 py-1 transition-colors"
           >
             Delete
           </button>

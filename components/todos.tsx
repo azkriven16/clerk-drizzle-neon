@@ -56,8 +56,10 @@ const Todos: FC<Props> = ({ todos, user }) => {
 
   // Rendering the Todo List component
   return (
-    <main className="flex mx-auto max-w-xl w-full min-h-screen flex-col items-center p-16">
-      <div className="text-5xl font-medium">To-do app</div>
+    <main className="flex mx-auto max-w-xl w-full min-h-screen flex-col items-center p-16 bg-gray-50 dark:bg-gray-900">
+      <div className="text-5xl font-medium text-gray-900 dark:text-gray-100 mb-8">
+        To-do app
+      </div>
       <div className="w-full flex flex-col mt-8 gap-2">
         {/* Mapping through todoItems and rendering Todo component for each */}
         {todoItems.map((todo) => (
