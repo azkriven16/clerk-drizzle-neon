@@ -1,4 +1,5 @@
 import { addUser } from "@/actions/user-actions";
+import { UserInput } from "@/db/schema";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,30 +17,33 @@ export async function POST(req: NextRequest) {
         username,
       } = evt.data;
 
-      const user = {
+      const userData: UserInput = {
         clerkId: id,
-        email: email_addresses[0].email_address,
-        name: username!,
-        firstName: first_name,
-        lastName: last_name,
-        photo: image_url,
+        email: email_addresses[0]?.email_address || "",
+        name:
+          username ||
+          `${first_name || ""} ${last_name || ""}`.trim() ||
+          "Unknown User",
+        firstName: first_name || "test",
+        lastName: last_name || "user",
+        photo: image_url || "",
       };
 
-      await addUser({
-        clerkId: user.clerkId,
-        email: user.email,
-        name: user.name,
-        firstName: user.firstName || "test",
-        lastName: user.lastName || "user",
-        photo: user.photo,
+      await addUser(userData);
+
+      console.log("New user created:", userData);
+      return NextResponse.json({
+        message: "New user created",
+        user: userData,
       });
-      console.log(user);
-      return NextResponse.json({ message: "New user created", user });
     }
 
-    return new Response("Webhook received", { status: 200 });
+    return NextResponse.json({ message: "Webhook received" }, { status: 200 });
   } catch (err) {
     console.error("Error verifying webhook:", err);
-    return new Response("Error verifying webhook", { status: 400 });
+    return NextResponse.json(
+      { error: "Error verifying webhook" },
+      { status: 400 }
+    );
   }
 }
