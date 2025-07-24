@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
 
       //   await addUser(user);
       const user = evt.data;
+      console.log(user);
       return NextResponse.json({ message: "New user created", user });
     }
 
