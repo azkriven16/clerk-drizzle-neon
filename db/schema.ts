@@ -37,3 +37,21 @@ export const todosRelations = relations(todos, ({ one }) => ({
 export const usersRelations = relations(users, ({ many }) => ({
   todos: many(todos),
 }));
+
+// Export types
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+
+export type UserInput = Omit<NewUser, "id" | "createdAt" | "updatedAt">;
+
+export type Todo = typeof todos.$inferSelect;
+export type NewTodo = typeof todos.$inferInsert;
+
+// Optional: Export types with relations
+export type UserWithTodos = User & {
+  todos: Todo[];
+};
+
+export type TodoWithUser = Todo & {
+  user: User;
+};

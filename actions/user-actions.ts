@@ -1,9 +1,7 @@
 "use server";
-import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
 
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { UserInput, users } from "@/db/schema";
 
 export const getAllUsers = async () => {
   const data = await db.select().from(users);
@@ -21,18 +19,18 @@ export const getUser = async (userId: any) => {
   return user;
 };
 
-export const addUser = async (user: any) => {
+export const addUser = async (user: UserInput) => {
   await db
     .insert(users)
     .values({
-      clerkId: user?.clerkId,
-      email: user?.email,
-      name: user?.name!,
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      photo: user?.photo,
+      clerkId: user.clerkId,
+      email: user.email,
+      name: user.name!,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      photo: user.photo,
     })
-    .returning({ clerkClientId: users?.clerkId });
+    .returning({ clerkClientId: users.clerkId });
 
   // revalidatePath("/");
 };
