@@ -7,25 +7,26 @@ export async function POST(req: NextRequest) {
     const evt = await verifyWebhook(req);
 
     if (evt.type === "user.created") {
-      const {
-        id,
-        email_addresses,
-        image_url,
-        first_name,
-        last_name,
-        username,
-      } = evt.data;
+      //   const {
+      //     id,
+      //     email_addresses,
+      //     image_url,
+      //     first_name,
+      //     last_name,
+      //     username,
+      //   } = evt.data;
 
-      const user = {
-        clerkId: id,
-        email: email_addresses[0].email_address,
-        name: username!,
-        firstName: first_name,
-        lastName: last_name,
-        photo: image_url,
-      };
+      //   const user = {
+      //     clerkId: id,
+      //     email: email_addresses[0].email_address,
+      //     name: username!,
+      //     firstName: first_name,
+      //     lastName: last_name,
+      //     photo: image_url,
+      //   };
 
-      await addUser(user);
+      //   await addUser(user);
+      const user = evt.data;
       return NextResponse.json({ message: "New user created", user });
     }
 
